@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>UiPath RPA Developer - HR Interview Prep</title>
+<style>
+  body {
+    font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: #f4f5f7;
+    margin: 0;
+    padding: 24px 12px 60px;
+    color: #222;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1 {
+    font-size: 22px;
+    margin: 0 0 4px;
+  }
+  .subtitle {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  .search {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 18px;
+  }
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #888;
+    margin: 26px 0 10px;
+  }
+  .item {
+    background: #fff;
+    border: 1px solid #e3e3e3;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .q {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 14px 16px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #1a1a1a;
+  }
+  .q:hover { background: #fafafa; }
+  .arrow {
+    transition: transform 0.2s ease;
+    color: #999;
+    flex-shrink: 0;
+    margin-left: 10px;
+  }
+  .item.open .arrow { transform: rotate(180deg); }
+  .a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+    padding: 0 16px;
+  }
+  .a-inner {
+    padding: 0 0 16px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: #444;
+    border-top: 1px solid #eee;
+    padding-top: 12px;
+  }
+  .a-inner b { color: #111; }
+  .toolbar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .btn {
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    color: #444;
+  }
+  .btn:hover { background: #f0f0f0; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>UiPath RPA Developer — HR Interview Q&amp;A</h1>
+  <div class="subtitle">Tap a question to reveal the answer. Use search to filter.</div>
+
+  <div style="display:flex; gap:8px;">
+    <input class="search" id="searchBox" placeholder="Ask anything, e.g. 'what is your expected salary'" oninput="liveFilter()" onkeydown="if(event.key==='Enter'){askQuestion();}">
+    <button class="btn" style="white-space:nowrap;" onclick="askQuestion()">Ask</button>
+  </div>
+  <div class="toolbar">
+    <button class="btn" onclick="toggleAll(true)">Expand all</button>
+    <button class="btn" onclick="toggleAll(false)">Collapse all</button>
+    <button class="btn" onclick="clearSearch()">Clear</button>
+  </div>
+
+  <div id="bestMatch"></div>
+  <div id="container"></div>
+</div>
+
+<script>
+const data = [
+  { section: "General HR Questions", qa: [
+    ["Tell me about yourself.", "Hi, I'm Kedam Jayasimha. I have around <b>2 years of experience</b> as a UiPath RPA Developer. Currently, I'm working as an Associate at Alldigi Tech, and previously I worked at HappiestMinds. I have hands-on experience in developing end-to-end automation solutions using UiPath Studio, REFramework, UiPath Orchestrator, SAP GUI, Excel, PDF, Email Automation, SQL, and REST API Integration. I've worked across the complete RPA development lifecycle, including requirement analysis, solution design, development, testing, deployment, and production support. I'm now looking for an opportunity where I can contribute to larger enterprise automation projects while continuing to grow my technical skills."],
+    ["Explain your current project.", "Currently, I'm working on an <b>Enterprise SAP WBS Settlement Automation</b> project. The objective is to automate SAP Work Breakdown Structure settlement activities that were previously performed manually.<br><br>The bot logs into SAP, processes WBS settlement transactions, validates results, updates reports, and sends notifications when required.<br><br>I use UiPath Studio, REFramework, SAP GUI Automation, and UiPath Orchestrator.<br><br>My responsibilities include workflow development, implementing enhancements, monitoring production jobs, resolving issues, supporting deployments, and ensuring stable automation in production."],
+    ["Tell me about your roles and responsibilities.", "My responsibilities include:<ul><li>Understanding business requirements and reviewing PDD</li><li>Preparing SDD and solution design</li><li>Developing automation using UiPath Studio and REFramework</li><li>Web, SAP, Excel, PDF and Email Automation</li><li>Creating reusable workflows</li><li>Queue Management and Asset configuration</li><li>Deployment through UiPath Orchestrator</li><li>Unit Testing and UAT support</li><li>Production Support</li><li>Bug fixing and process enhancements</li><li>Collaborating with Business Analysts and clients</li></ul>"],
+    ["Explain REFramework.", "REFramework (Robotic Enterprise Framework) is a UiPath project template based on a State Machine architecture used for transactional automation.<br><br>It consists of four states:<ul><li>Initialization</li><li>Get Transaction Data</li><li>Process Transaction</li><li>End Process</li></ul>Initialization loads configuration files, retrieves credentials, opens applications, and prepares the environment.<br><br>Get Transaction Data fetches one transaction from a Queue or DataTable.<br><br>Process Transaction executes the business logic while handling Business and System Exceptions.<br><br>End Process closes applications and performs cleanup activities.<br><br>REFramework provides retry mechanisms, exception handling, logging, configuration management, queue processing, and reusable components, making it ideal for enterprise automation projects."],
+    ["What is your previous package?", "My previous CTC was <b>6.5 LPA</b>."],
+    ["What is your expected package?", "I'm expecting around <b>8.5 LPA</b> based on my experience, technical skills, and current market standards. However, I'm open to discussion based on the role and overall opportunity."],
+    ["Tell me about your previous company.", "Previously, I worked at HappiestMinds as a UiPath RPA Developer. I was involved in enterprise automation projects where I developed automation solutions using UiPath Studio and REFramework. My work included Web Automation, SAP Automation, Excel Automation, PDF Automation, SQL integration, deployment, production support, and UiPath Orchestrator activities."],
+    ["What is your total experience?", "I have around <b>2 years of total experience</b> as a UiPath RPA Developer."],
+    ["What is your relevant experience?", "I have around <b>2 years of relevant experience</b> in UiPath development, including REFramework, Orchestrator, SAP Automation, Excel, PDF, Email Automation, SQL, REST APIs, deployment, and production support."],
+    ["Are you serving a notice period?", "No, I have already completed my notice period."],
+    ["What is your last working day?", "My last working day was <b>(mention your actual last working date).</b>"],
+    ["Are you an immediate joiner?", "Yes, I'm an immediate joiner."],
+    ["Do you have any offers?", "Currently, I don't have a finalized offer. I'm actively interviewing, and a few opportunities are in the pipeline.<br><br><b>If HR asks why you resigned:</b><br>I did receive an opportunity in Noida, but due to the relocation and travel constraints, I decided not to proceed. I'm now looking for a role that's a better fit in terms of location and long-term career growth."],
+    ["Do you have PF?", "Yes."],
+    ["Do you have Form 16?", "Yes."],
+    ["Do you have experience in Development?", "Yes. I have developed end-to-end automation solutions using UiPath Studio and REFramework."],
+    ["Do you have Deployment experience?", "Yes. I have deployed automation packages through UiPath Orchestrator, configured Assets, managed Queues, scheduled jobs, and supported production deployments."],
+    ["Do you have Production Support experience?", "Yes. I have monitored bot execution, analyzed logs, resolved production issues, implemented enhancements, debugged failures, and validated fixes in production."],
+    ["Do you have Support role experience?", "Yes. I have supported production bots by monitoring jobs, resolving incidents, fixing defects, handling user-reported issues, and ensuring smooth automation execution."]
+  ]},
+  { section: "Project Deep Dives", qa: [
+    ["Project 1: Can you explain your Invoice Processing project?", "One of my major projects was <b>End-to-End Invoice Processing Automation</b> for the finance team. The objective was to automate the manual invoice processing workflow. Earlier, users manually downloaded PDF invoices, extracted details, validated the data, updated Excel reports, and sent email notifications.<br><br>Using UiPath and REFramework, I developed an automation that extracts invoice data from PDF files, validates business rules, updates Excel reports, and sends email notifications automatically. We used UiPath Orchestrator for deployment, scheduling, and monitoring.<br><br>My responsibilities included requirement analysis, workflow development, exception handling, testing, deployment, and production support. This automation significantly reduced manual effort, improved accuracy, and saved processing time."],
+    ["Project 2: Tell me about your Campaign Lifecycle project.", "My second project was <b>Campaign Lifecycle Automation</b>. The purpose of this project was to automate campaign creation and reward point processing in the ACMS application.<br><br>The bot reads campaign details from Excel, validates the data, creates campaigns in the application, performs reward point calculations, and updates the database. We used UiPath Studio, REFramework, SQL Server, and UiPath Orchestrator with Queue-based processing.<br><br>I was involved in solution development, Queue implementation, exception handling, testing, deployment, and production support. The automation reduced manual work, improved processing accuracy, and ensured reliable transaction processing."],
+    ["Project 3: Can you explain your SAP project?", "My third project was <b>Enterprise SAP WBS Settlement Automation</b>. The goal was to automate SAP Work Breakdown Structure settlement activities that were previously performed manually.<br><br>The bot logs into SAP, processes WBS settlement transactions, validates the results, updates reports, and sends notifications when required. The automation was developed using UiPath, REFramework, SAP GUI Automation, and UiPath Orchestrator.<br><br>My role included workflow development, implementing enhancements, monitoring production jobs, resolving issues, supporting deployments, and maintaining stable automation in production."],
+    ["Which project are you currently working on?", "Currently, I'm working on <b>SAP WBS Settlement Automation</b>. My responsibilities include implementing enhancements based on business requirements, monitoring bot execution through UiPath Orchestrator, resolving production issues, performing code fixes, supporting deployments, and ensuring the automation runs smoothly."],
+    ["Which project are you most comfortable explaining?", "I'm most comfortable explaining the <b>Invoice Processing Automation</b> project because I was involved throughout the complete development lifecycle—from requirement analysis and development to testing, deployment, and production support."],
+    ["Can you give a 30-second combined project summary?", "I have worked on three major UiPath automation projects. The first is <b>Invoice Processing Automation</b>, where we automated PDF invoice extraction, validation, Excel updates, and email notifications. The second is <b>Campaign Lifecycle Automation</b>, where we automated campaign creation and reward point processing using Excel, SQL Server, Queues, and REFramework. The third is <b>SAP WBS Settlement Automation</b>, where we automated SAP settlement processes and provided production support and enhancements. Across all these projects, I worked with UiPath Studio, REFramework, UiPath Orchestrator, Queues, Assets, exception handling, deployment, and production support."]
+  ]},
+  { section: "Questions to Ask the HR", qa: [
+    ["What should I ask the HR at the end of the call?", "<ul><li>Is this a permanent position or a contract role?</li><li>If it's a permanent position, will I be on the company's payroll?</li><li>Which client or project will I be working on?</li><li>What technologies are mainly used in this project?</li><li>Can you explain the interview process and the number of rounds?</li><li>What is the expected joining timeline?</li><li>Is the work model onsite, hybrid, or remote?</li><li>What are the typical working hours or shift timings?</li><li>Are there opportunities for learning, certifications, or career growth?</li></ul>"]
+  ]},
+  { section: "Technical Concepts (Simple Explanations)", qa: [
+    ["What is Excel Automation?", "Excel Automation means using UiPath to perform Excel tasks automatically instead of doing them manually. For example, reading data, updating reports, writing data, filtering records, and generating Excel files. This saves time and reduces manual errors."],
+    ["What are Excel Macros?", "Excel Macros are small programs written in VBA that automate repetitive tasks in Excel. In UiPath, we can run an existing macro using the <b>Execute Macro</b> activity instead of doing the work manually.<br><br><b>Example:</b> If a company already has a macro to format a report, UiPath can simply open the Excel file and run that macro automatically."],
+    ["What is SAP Automation?", "SAP Automation means automating work done in the SAP application using UiPath. Instead of manually entering data or generating reports, the bot performs those tasks automatically.<br><br><b>Example:</b> Creating Purchase Orders, processing invoices, updating customer data, or SAP WBS Settlement."],
+    ["What is Document Understanding?", "Document Understanding is a UiPath feature that extracts data from documents like invoices, receipts, purchase orders, and bank statements using AI and OCR. It helps reduce manual data entry."],
+    ["What is PDF Automation?", "PDF Automation means reading and extracting information from PDF files automatically.<br><br>If the PDF contains selectable text, UiPath reads it directly.<br><br>If it is a scanned PDF, UiPath uses OCR to extract the text."],
+    ["What is SQL?", "SQL is a language used to communicate with databases. We use it to retrieve, insert, update, or delete data.<br><br><b>Example:</b> In UiPath, we use SQL to fetch customer information from a database or update records after automation."],
+    ["What are APIs?", "API stands for <b>Application Programming Interface</b>. It allows two applications to communicate with each other.<br><br>Instead of opening a website and copying data manually, UiPath can get the data directly through an API, which is faster and more reliable."],
+    ["What is REST API?", "REST API is a type of web service used to exchange data between applications over the internet.<br><br>In UiPath, we use the <b>HTTP Request</b> activity to call REST APIs and receive data in JSON format."],
+    ["What is Workflow Automation?", "Workflow Automation means automating a complete business process from start to finish.<br><br>For example, receiving an invoice, extracting the data, updating SAP, sending an email, and generating a report—all done automatically by the bot."],
+    ["What is SDLC?", "SDLC stands for <b>Software Development Life Cycle</b>. It is the step-by-step process used to develop software.<br><br>The stages are:<ul><li>Requirement Gathering</li><li>Design</li><li>Development</li><li>Testing</li><li>Deployment</li><li>Maintenance</li></ul>We follow the same process in RPA projects."],
+    ["What is Agile?", "Agile is a way of managing projects where work is divided into small parts called <b>Sprints</b>.<br><br>The team meets regularly to discuss progress, complete tasks quickly, and make changes based on feedback."],
+    ["Difference between SDLC and Agile?", "SDLC is the complete software development process.<br><br>Agile is a methodology used to execute that process in small iterations or sprints."],
+    ["What is UiPath Orchestrator?", "UiPath Orchestrator is a web-based tool used to manage UiPath robots. We use it to deploy processes, schedule bots, manage queues and assets, monitor jobs, and view logs."],
+    ["What are Assets?", "Assets are secure values stored in Orchestrator.<br><br>Examples include usernames, passwords, API keys, URLs, and file paths. This helps avoid hardcoding sensitive information in workflows."],
+    ["What are Queues?", "Queues are used to store transaction items for processing one by one.<br><br>They help manage large amounts of data and support retry mechanisms if a transaction fails."],
+    ["What is Exception Handling?", "Exception Handling means managing errors that occur during automation.<br><br>In UiPath, we use <b>Try-Catch</b> blocks to handle exceptions so the bot can continue running or log the error properly."],
+    ["What is Logging?", "Logging means recording what the bot is doing during execution.<br><br>It helps us track progress, identify errors, and debug issues if something goes wrong."],
+    ["What is OCR?", "OCR stands for <b>Optical Character Recognition</b>.<br><br>It converts text from scanned documents or images into readable text that UiPath can process."],
+    ["Difference between Attended and Unattended Robot?", "<b>Attended Robot:</b> Runs with user involvement on the user's machine.<br><br><b>Unattended Robot:</b> Runs automatically without user interaction, usually scheduled through Orchestrator."],
+    ["What is Dispatcher and Performer?", "The <b>Dispatcher</b> reads data from a source like Excel or a database and adds it to an Orchestrator Queue.<br><br>The <b>Performer</b> reads each Queue item and processes it one by one using the business logic."],
+    ["Why do we use REFramework?", "We use REFramework because it provides a standard structure for enterprise automation. It includes exception handling, retry mechanisms, logging, transaction management, and configuration management, making automation more reliable and easier to maintain."],
+    ["What is Production Support?", "Production support means monitoring bots after deployment, checking logs, fixing issues, resolving failed jobs, implementing small enhancements, and ensuring the automation runs smoothly."],
+    ["What is Deployment?", "Deployment is the process of publishing a UiPath project to Orchestrator and making it available for robots to run."],
+    ["What is UAT?", "UAT stands for <b>User Acceptance Testing</b>. In this stage, business users test the automation to ensure it meets their requirements before it goes live."],
+    ["Interview tip for technical answers?", "For HR or the first technical round, keep each answer to <b>20–40 seconds</b>. If the interviewer wants more details, they will ask follow-up questions. Simple, confident explanations are usually more effective than long textbook definitions."]
+  ]}
+];
+
+const container = document.getElementById('container');
+
+function render() {
+  container.innerHTML = '';
+  data.forEach(section => {
+    const secTitle = document.createElement('div');
+    secTitle.className = 'section-title';
+    secTitle.textContent = section.section;
+    secTitle.dataset.section = '1';
+    container.appendChild(secTitle);
+
+    section.qa.forEach(([q, a]) => {
+      const item = document.createElement('div');
+      item.className = 'item';
+      item.dataset.q = q.toLowerCase();
+      item.dataset.full = (q + ' ' + a.replace(/<[^>]+>/g, ' ')).toLowerCase();
+
+      const btn = document.createElement('button');
+      btn.className = 'q';
+      btn.innerHTML = `<span>${q}</span><span class="arrow">&#9660;</span>`;
+
+      const ans = document.createElement('div');
+      ans.className = 'a';
+      ans.innerHTML = `<div class="a-inner">${a}</div>`;
+
+      btn.onclick = () => {
+        const isOpen = item.classList.contains('open');
+        item.classList.toggle('open');
+        ans.style.maxHeight = isOpen ? null : ans.scrollHeight + 'px';
+      };
+
+      item.appendChild(btn);
+      item.appendChild(ans);
+      container.appendChild(item);
+    });
+  });
+}
+
+function toggleAll(open) {
+  document.querySelectorAll('.item').forEach(item => {
+    const ans = item.querySelector('.a');
+    item.classList.toggle('open', open);
+    ans.style.maxHeight = open ? ans.scrollHeight + 'px' : null;
+  });
+}
+
+function scoreItem(item, words) {
+  const text = item.dataset.full;
+  let score = 0;
+  words.forEach(w => {
+    if (!w) return;
+    if (item.dataset.q.includes(w)) score += 3;
+    else if (text.includes(w)) score += 1;
+  });
+  return score;
+}
+
+function filterQA() {
+  const raw = document.getElementById('searchBox').value.trim().toLowerCase();
+  const sections = document.querySelectorAll('.section-title');
+  const items = Array.from(document.querySelectorAll('.item'));
+
+  if (!raw) {
+    items.forEach(item => {
+      item.classList.remove('hidden');
+      item.classList.remove('open');
+      item.querySelector('.a').style.maxHeight = null;
+    });
+    sections.forEach(sec => sec.classList.remove('hidden'));
+    return;
+  }
+
+  const words = raw.split(/\s+/).filter(w => w.length > 2);
+  let best = null, bestScore = 0;
+
+  items.forEach(item => {
+    const score = scoreItem(item, words.length ? words : [raw]);
+    const directMatch = item.dataset.q.includes(raw);
+    const visible = score > 0 || directMatch;
+    item.classList.toggle('hidden', !visible);
+    item.classList.remove('open');
+    item.querySelector('.a').style.maxHeight = null;
+    const finalScore = directMatch ? score + 5 : score;
+    if (visible && finalScore > bestScore) {
+      bestScore = finalScore;
+      best = item;
+    }
+  });
+
+  if (best) {
+    best.classList.add('open');
+    const ans = best.querySelector('.a');
+    ans.style.maxHeight = ans.scrollHeight + 'px';
+    best.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  sections.forEach(sec => {
+    let node = sec.nextElementSibling;
+    let anyVisible = false;
+    while (node && !node.classList.contains('section-title')) {
+      if (!node.classList.contains('hidden')) anyVisible = true;
+      node = node.nextElementSibling;
+    }
+    sec.classList.toggle('hidden', !anyVisible);
+  });
+}
+
+render();
+
+function askQuestion() {
+  filterQA();
+}
+
+function clearSearch() {
+  document.getElementById('searchBox').value = '';
+  filterQA();
+}
+
+</script>
+</body>
+</html>
